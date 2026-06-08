@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__6820f041-7a97-4631-95a6-d0cca7709c2c__list_projects",
+      "mcp__6820f041-7a97-4631-95a6-d0cca7709c2c__list_organizations",
+      "mcp__6820f041-7a97-4631-95a6-d0cca7709c2c__get_project",
+      "Bash(npm --version)",
+      "Bash(git --version)",
+      "WebFetch(domain:en.wikipedia.org)"
+    ]
+  }
+}
