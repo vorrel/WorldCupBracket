@@ -36,7 +36,7 @@ export function Layout() {
   return (
     <div className="min-h-full flex flex-col bg-background text-foreground">
       <header className="border-b border-border bg-background/80 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2">
+        <div className="max-w-screen-2xl mx-auto px-4 py-3 flex items-center gap-2">
           <button
             onClick={() => navigate('/')}
             className="font-display font-bold text-lg mr-4 flex items-center gap-2"
@@ -75,7 +75,7 @@ export function Layout() {
           </div>
         </div>
       </header>
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
+      <main className="flex-1 max-w-screen-2xl mx-auto w-full px-4 py-6">
         <Outlet />
       </main>
       <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
