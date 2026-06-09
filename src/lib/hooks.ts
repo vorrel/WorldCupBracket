@@ -41,21 +41,29 @@ export function usePicks(userId: string | undefined) {
   return { picks, setPicks, loading }
 }
 
-// Debounced auto-save for a single pick row. Returns a `save` function
-// the caller invokes on every change; the actual upsert is throttled.
+// Shape of fields the saver writes for a single match.
+export type PickWrite = {
+  predicted_winner_code: string | null
+  predicted_score_a: number | null
+  predicted_score_b: number | null
+}
+
+// Debounced auto-save. Callers pass the FULL desired state of a row each
+// time, so the upsert always carries every field — picking a winner won't
+// clobber the score and vice versa.
 export function usePickSaver(userId: string | undefined) {
-  const pending = useRef<Map<number, Partial<PickRow>>>(new Map())
+  const pending = useRef<Map<number, PickWrite>>(new Map())
   const timer = useRef<number | null>(null)
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
 
   function flush() {
     if (!userId) return
-    const rows = [...pending.current.entries()].map(([matchNumber, partial]) => ({
+    const rows = [...pending.current.entries()].map(([matchNumber, row]) => ({
       user_id: userId,
       match_number: matchNumber,
-      predicted_winner_code: partial.predicted_winner_code ?? null,
-      predicted_score_a: partial.predicted_score_a ?? null,
-      predicted_score_b: partial.predicted_score_b ?? null,
+      predicted_winner_code: row.predicted_winner_code,
+      predicted_score_a: row.predicted_score_a,
+      predicted_score_b: row.predicted_score_b,
     }))
     if (!rows.length) return
     pending.current = new Map()
@@ -74,10 +82,9 @@ export function usePickSaver(userId: string | undefined) {
       })
   }
 
-  function save(matchNumber: number, patch: Partial<PickRow>) {
+  function save(matchNumber: number, row: PickWrite) {
     if (!userId) return
-    const prev = pending.current.get(matchNumber) ?? {}
-    pending.current.set(matchNumber, { ...prev, ...patch })
+    pending.current.set(matchNumber, row)
     if (timer.current) window.clearTimeout(timer.current)
     timer.current = window.setTimeout(flush, 400)
   }

@@ -13,22 +13,28 @@ export function BracketPage() {
 
   function applyPick(matchNumber: number, winnerCode: string) {
     if (!session) return
+    const existing = picks.find(p => p.match_number === matchNumber)
+    const next: PickRow = {
+      user_id: session.user.id,
+      match_number: matchNumber,
+      predicted_winner_code: winnerCode,
+      predicted_score_a: existing?.predicted_score_a ?? null,
+      predicted_score_b: existing?.predicted_score_b ?? null,
+      updated_at: new Date().toISOString(),
+    }
     setPicks(prev => {
       const idx = prev.findIndex(p => p.match_number === matchNumber)
-      const next: PickRow = {
-        user_id: session.user.id,
-        match_number: matchNumber,
-        predicted_winner_code: winnerCode,
-        predicted_score_a: prev[idx]?.predicted_score_a ?? null,
-        predicted_score_b: prev[idx]?.predicted_score_b ?? null,
-        updated_at: new Date().toISOString(),
-      }
       if (idx >= 0) {
         const copy = [...prev]; copy[idx] = next; return copy
       }
       return [...prev, next]
     })
-    save(matchNumber, { predicted_winner_code: winnerCode })
+    // Write the FULL row so the upsert never clobbers other fields.
+    save(matchNumber, {
+      predicted_winner_code: next.predicted_winner_code,
+      predicted_score_a: next.predicted_score_a,
+      predicted_score_b: next.predicted_score_b,
+    })
   }
 
   return (

@@ -35,22 +35,37 @@ export function GroupsPage() {
 
   function applyPick(matchNumber: number, patch: Partial<PickRow>) {
     if (!session) return
+    // Merge against the latest known pick. Use `in` so an explicit `null`
+    // (e.g. picking "Draw" or clearing a score) overrides the old value
+    // instead of being swallowed by `??`.
+    const existing = picks.find(p => p.match_number === matchNumber)
+    const next: PickRow = {
+      user_id: session.user.id,
+      match_number: matchNumber,
+      predicted_winner_code: 'predicted_winner_code' in patch
+        ? (patch.predicted_winner_code ?? null)
+        : (existing?.predicted_winner_code ?? null),
+      predicted_score_a: 'predicted_score_a' in patch
+        ? (patch.predicted_score_a ?? null)
+        : (existing?.predicted_score_a ?? null),
+      predicted_score_b: 'predicted_score_b' in patch
+        ? (patch.predicted_score_b ?? null)
+        : (existing?.predicted_score_b ?? null),
+      updated_at: new Date().toISOString(),
+    }
     setPicks(prev => {
       const idx = prev.findIndex(p => p.match_number === matchNumber)
-      const next: PickRow = {
-        user_id: session.user.id,
-        match_number: matchNumber,
-        predicted_winner_code: patch.predicted_winner_code ?? prev[idx]?.predicted_winner_code ?? null,
-        predicted_score_a: patch.predicted_score_a ?? prev[idx]?.predicted_score_a ?? null,
-        predicted_score_b: patch.predicted_score_b ?? prev[idx]?.predicted_score_b ?? null,
-        updated_at: new Date().toISOString(),
-      }
       if (idx >= 0) {
         const copy = [...prev]; copy[idx] = next; return copy
       }
       return [...prev, next]
     })
-    save(matchNumber, patch)
+    // Always write the FULL row so upserting one field never clobbers the others.
+    save(matchNumber, {
+      predicted_winner_code: next.predicted_winner_code,
+      predicted_score_a: next.predicted_score_a,
+      predicted_score_b: next.predicted_score_b,
+    })
   }
 
   return (
