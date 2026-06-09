@@ -28,10 +28,10 @@ export function UserBracketPage() {
     return () => { active = false }
   }, [userId])
 
-  if (ml || loading) return <div className="text-neutral-500">Loading…</div>
+  if (ml || loading) return <div className="text-muted-foreground">Loading…</div>
 
   if (!profile) {
-    return <div className="text-neutral-500">No player with that id.</div>
+    return <div className="text-muted-foreground">No player with that id.</div>
   }
 
   const score = scoreUser(matches, picks)
@@ -39,10 +39,10 @@ export function UserBracketPage() {
   return (
     <div>
       <div className="mb-4">
-        <Link to="/leaderboard" className="text-xs text-neutral-500 hover:underline">← Leaderboard</Link>
+        <Link to="/leaderboard" className="text-xs text-muted-foreground hover:underline">← Leaderboard</Link>
         <h1 className="font-display text-2xl font-bold">{profile.display_name}'s bracket</h1>
-        <p className="text-sm text-neutral-500 mt-1">
-          Total <span className="font-bold text-neutral-900 dark:text-neutral-100">{score.total}</span> pts
+        <p className="text-sm text-muted-foreground mt-1">
+          Total <span className="font-bold text-foreground">{score.total}</span> pts
           {' · '}
           Group {score.byRound.group} pts
           {' · '}

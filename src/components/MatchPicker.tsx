@@ -95,12 +95,12 @@ export function MatchPicker({
   }
 
   const containerCls = locked
-    ? 'bg-neutral-50 border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800 opacity-80'
-    : 'bg-white border-neutral-200 hover:border-pitch-500 dark:bg-neutral-900 dark:border-neutral-800'
+    ? 'bg-muted border-border opacity-80'
+    : 'bg-card border-border hover:border-primary'
 
   return (
     <div className={`rounded-lg border p-3 ${containerCls}`}>
-      <div className="text-[11px] text-neutral-500 mb-2 flex justify-between">
+      <div className="text-[11px] text-muted-foreground mb-2 flex justify-between">
         <span>M{match.match_number} · {fmtKickoff(match.kickoff_at)}</span>
         {locked && <span className="text-amber-600 dark:text-amber-400">🔒 locked</span>}
       </div>
@@ -111,8 +111,8 @@ export function MatchPicker({
           onClick={() => pickWinner('A')}
           className={`min-w-0 flex items-center gap-2 p-2 rounded-md text-left ${
             choice === 'A'
-              ? 'bg-pitch-100 ring-2 ring-pitch-500 dark:bg-pitch-900/50'
-              : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'
+              ? 'bg-primary/15 ring-2 ring-primary text-foreground'
+              : 'hover:bg-accent hover:text-accent-foreground'
           }`}
         >
           <TeamBadge code={match.team_a_code} fallback={match.slot_a_label ?? undefined} size="sm" />
@@ -129,10 +129,10 @@ export function MatchPicker({
                   disabled={locked}
                   value={pick?.predicted_score_a ?? ''}
                   onChange={(e) => setScore('a', e.target.value)}
-                  className="w-10 text-center rounded border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-950 text-sm"
+                  className="w-10 text-center rounded border border-border bg-input text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   placeholder="–"
                 />
-                <span className="text-neutral-400 text-xs">vs</span>
+                <span className="text-muted-foreground text-xs">vs</span>
                 <input
                   type="number"
                   min={0}
@@ -140,22 +140,22 @@ export function MatchPicker({
                   disabled={locked}
                   value={pick?.predicted_score_b ?? ''}
                   onChange={(e) => setScore('b', e.target.value)}
-                  className="w-10 text-center rounded border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-950 text-sm"
+                  className="w-10 text-center rounded border border-border bg-input text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   placeholder="–"
                 />
               </div>
               <span
                 className={`px-2 py-0.5 rounded text-[11px] ${
                   choice === 'DRAW'
-                    ? 'bg-pitch-100 text-pitch-700 ring-1 ring-pitch-500 dark:bg-pitch-900/50 dark:text-pitch-300'
-                    : 'text-neutral-400'
+                    ? 'bg-primary/15 text-primary ring-1 ring-primary'
+                    : 'text-muted-foreground'
                 }`}
               >
                 Draw
               </span>
             </>
           ) : (
-            <span className="text-xs text-neutral-400">vs</span>
+            <span className="text-xs text-muted-foreground">vs</span>
           )}
         </div>
 
@@ -165,8 +165,8 @@ export function MatchPicker({
           onClick={() => pickWinner('B')}
           className={`min-w-0 flex items-center gap-2 p-2 rounded-md justify-end ${
             choice === 'B'
-              ? 'bg-pitch-100 ring-2 ring-pitch-500 dark:bg-pitch-900/50'
-              : 'hover:bg-neutral-100 dark:hover:bg-neutral-800'
+              ? 'bg-primary/15 ring-2 ring-primary text-foreground'
+              : 'hover:bg-accent hover:text-accent-foreground'
           }`}
         >
           <TeamBadge

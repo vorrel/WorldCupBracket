@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
+import { ThemeToggle } from './ThemeToggle'
 
 function NavTab({ to, children }: { to: string; children: React.ReactNode }) {
   return (
@@ -10,8 +11,8 @@ function NavTab({ to, children }: { to: string; children: React.ReactNode }) {
       className={({ isActive }) =>
         `px-3 py-1.5 rounded-md text-sm font-medium transition ${
           isActive
-            ? 'bg-pitch-600 text-white'
-            : 'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800'
+            ? 'bg-primary text-primary-foreground'
+            : 'text-foreground/80 hover:bg-accent hover:text-accent-foreground'
         }`
       }
     >
@@ -33,14 +34,14 @@ export function Layout() {
   }, [session])
 
   return (
-    <div className="min-h-full flex flex-col">
-      <header className="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur sticky top-0 z-10">
+    <div className="min-h-full flex flex-col bg-background text-foreground">
+      <header className="border-b border-border bg-background/80 backdrop-blur sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2">
           <button
             onClick={() => navigate('/')}
             className="font-display font-bold text-lg mr-4 flex items-center gap-2"
           >
-            <span className="text-pitch-600">⚽</span>
+            <span className="text-primary">⚽</span>
             <span>WC26 Bracket</span>
           </button>
           <nav className="flex gap-1 flex-1">
@@ -50,20 +51,24 @@ export function Layout() {
             {isAdmin && <NavTab to="/admin">Admin</NavTab>}
           </nav>
           <div className="flex items-center gap-2 text-sm">
+            <ThemeToggle />
             {session ? (
               <>
-                <NavLink to="/profile" className="text-neutral-600 dark:text-neutral-400 hover:underline">
+                <NavLink to="/profile" className="text-muted-foreground hover:underline">
                   {session.user.email}
                 </NavLink>
                 <button
                   onClick={async () => { await signOut(); navigate('/sign-in') }}
-                  className="px-2 py-1 text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+                  className="px-2 py-1 text-muted-foreground hover:text-foreground"
                 >
                   Sign out
                 </button>
               </>
             ) : (
-              <NavLink to="/sign-in" className="px-3 py-1.5 rounded-md bg-pitch-600 text-white text-sm font-medium">
+              <NavLink
+                to="/sign-in"
+                className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm font-medium"
+              >
                 Sign in
               </NavLink>
             )}
@@ -73,7 +78,7 @@ export function Layout() {
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
         <Outlet />
       </main>
-      <footer className="border-t border-neutral-200 dark:border-neutral-800 py-4 text-center text-xs text-neutral-500">
+      <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
         FIFA World Cup 2026 — picks lock at each match's kickoff.
       </footer>
     </div>

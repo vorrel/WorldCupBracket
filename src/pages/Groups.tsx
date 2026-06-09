@@ -31,7 +31,7 @@ export function GroupsPage() {
     [matches],
   )
 
-  if (ml || pl) return <div className="text-neutral-500">Loading…</div>
+  if (ml || pl) return <div className="text-muted-foreground">Loading…</div>
 
   function applyPick(matchNumber: number, patch: Partial<PickRow>) {
     if (!session) return
@@ -73,7 +73,7 @@ export function GroupsPage() {
       <div className="flex items-baseline justify-between mb-4">
         <div>
           <h1 className="font-display text-2xl font-bold">Group stage</h1>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Pick a winner (or draw) for each match. Optional score for the bonus point.
           </p>
         </div>
@@ -111,10 +111,10 @@ function GroupCard({
 }) {
   const now = Date.now()
   return (
-    <section className="border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 bg-white/50 dark:bg-neutral-900/40">
+    <section className="border border-border rounded-xl p-4 bg-card text-card-foreground shadow-sm">
       <header className="flex items-center justify-between mb-3">
         <h2 className="font-display font-bold text-lg">Group {group}</h2>
-        <span className="text-xs text-neutral-500">{teamsInGroup(group).length} teams</span>
+        <span className="text-xs text-muted-foreground">{teamsInGroup(group).length} teams</span>
       </header>
 
       <ol className="text-xs space-y-0.5 mb-3">
@@ -122,11 +122,11 @@ function GroupCard({
           <li key={t.code} className="flex items-center justify-between">
             <span className="flex items-center gap-2">
               <span className={`w-4 text-right tabular-nums ${
-                i < 2 ? 'font-bold text-pitch-700 dark:text-pitch-400' : i === 2 ? 'text-amber-600' : 'text-neutral-400'
+                i < 2 ? 'font-bold text-primary' : i === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'
               }`}>{i + 1}.</span>
               <TeamBadge code={t.code} size="sm" />
             </span>
-            <span className="tabular-nums text-neutral-500">
+            <span className="tabular-nums text-muted-foreground">
               {t.pts}pt · {t.gd >= 0 ? '+' : ''}{t.gd}gd
             </span>
           </li>
@@ -161,7 +161,7 @@ function GroupCard({
 
 function SaveBadge({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' }) {
   if (status === 'idle') return null
-  if (status === 'saving') return <span className="text-xs text-neutral-500">Saving…</span>
-  if (status === 'saved') return <span className="text-xs text-pitch-600">Saved ✓</span>
-  return <span className="text-xs text-red-500">Save failed</span>
+  if (status === 'saving') return <span className="text-xs text-muted-foreground">Saving…</span>
+  if (status === 'saved') return <span className="text-xs text-primary">Saved ✓</span>
+  return <span className="text-xs text-destructive">Save failed</span>
 }

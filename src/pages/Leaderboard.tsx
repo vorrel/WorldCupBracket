@@ -58,48 +58,48 @@ export function LeaderboardPage() {
       .sort((a, b) => b.total - a.total || a.displayName.localeCompare(b.displayName))
   }, [matches, profiles, picks])
 
-  if (ml || loading) return <div className="text-neutral-500">Loading…</div>
+  if (ml || loading) return <div className="text-muted-foreground">Loading…</div>
 
   return (
     <div>
       <h1 className="font-display text-2xl font-bold mb-1">Leaderboard</h1>
-      <p className="text-sm text-neutral-500 mb-4">
+      <p className="text-sm text-muted-foreground mb-4">
         Click anyone to see their bracket. {rows.length} player{rows.length === 1 ? '' : 's'}.
       </p>
 
       {rows.length === 0 ? (
-        <p className="text-neutral-500">
-          No brackets yet. <Link to="/sign-in" className="text-pitch-600 underline">Sign in</Link> to be the first.
+        <p className="text-muted-foreground">
+          No brackets yet. <Link to="/sign-in" className="text-primary underline">Sign in</Link> to be the first.
         </p>
       ) : (
-        <div className="overflow-hidden border border-neutral-200 dark:border-neutral-800 rounded-xl">
+        <div className="overflow-hidden border border-border rounded-xl bg-card text-card-foreground">
           <table className="w-full text-sm">
-            <thead className="bg-neutral-50 dark:bg-neutral-900 text-left">
+            <thead className="bg-muted text-muted-foreground text-left">
               <tr>
                 <th className="px-3 py-2 w-12">#</th>
                 <th className="px-3 py-2">Player</th>
                 <th className="px-3 py-2 text-right">Group</th>
                 <th className="px-3 py-2 text-right">Bracket</th>
                 <th className="px-3 py-2 text-right">Total</th>
-                <th className="px-3 py-2 text-right text-neutral-400">Picks</th>
+                <th className="px-3 py-2 text-right">Picks</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => (
                 <tr
                   key={r.userId}
-                  className="border-t border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900/50"
+                  className="border-t border-border hover:bg-accent/40"
                 >
-                  <td className="px-3 py-2 text-neutral-500 tabular-nums">{i + 1}</td>
+                  <td className="px-3 py-2 text-muted-foreground tabular-nums">{i + 1}</td>
                   <td className="px-3 py-2">
-                    <Link to={`/u/${r.userId}`} className="text-pitch-700 dark:text-pitch-400 hover:underline font-medium">
+                    <Link to={`/u/${r.userId}`} className="text-primary hover:underline font-medium">
                       {r.displayName}
                     </Link>
                   </td>
                   <td className="px-3 py-2 text-right tabular-nums">{r.groupPoints}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{r.bracketPoints}</td>
                   <td className="px-3 py-2 text-right tabular-nums font-bold">{r.total}</td>
-                  <td className="px-3 py-2 text-right tabular-nums text-neutral-400">{r.picksMade}</td>
+                  <td className="px-3 py-2 text-right tabular-nums text-muted-foreground">{r.picksMade}</td>
                 </tr>
               ))}
             </tbody>

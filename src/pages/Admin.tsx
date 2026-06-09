@@ -23,10 +23,10 @@ export function AdminPage() {
     [matches, filter],
   )
 
-  if (loading || isAdmin === null) return <div className="text-neutral-500">Loading…</div>
+  if (loading || isAdmin === null) return <div className="text-muted-foreground">Loading…</div>
   if (!isAdmin) {
     return (
-      <div className="text-neutral-500">
+      <div className="text-muted-foreground">
         Not an admin. Ask the project owner to add your email to <code>admin_emails</code>.
       </div>
     )
@@ -35,7 +35,7 @@ export function AdminPage() {
   return (
     <div>
       <h1 className="font-display text-2xl font-bold mb-1">Match results</h1>
-      <p className="text-sm text-neutral-500 mb-4">
+      <p className="text-sm text-muted-foreground mb-4">
         Enter actual results here. Picks rescore automatically.
       </p>
       <div className="mb-4 flex flex-wrap gap-2 text-xs">
@@ -45,8 +45,8 @@ export function AdminPage() {
             onClick={() => setFilter(r)}
             className={`px-2 py-1 rounded ${
               filter === r
-                ? 'bg-pitch-600 text-white'
-                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
             }`}
           >
             {r === 'all' ? 'All' : r.toUpperCase()}
@@ -89,15 +89,15 @@ function AdminRow({ match }: { match: MatchRow }) {
   }
 
   return (
-    <div className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_120px_120px] gap-2 items-center">
-      <div className="text-xs text-neutral-500">
+    <div className="border border-border bg-card text-card-foreground rounded-lg p-3 grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_120px_120px] gap-2 items-center">
+      <div className="text-xs text-muted-foreground">
         M{match.match_number}<br />{match.round.toUpperCase()}
       </div>
       <div className="flex items-center gap-2">
         <select
           value={teamA}
           onChange={(e) => setTeamA(e.target.value)}
-          className="px-2 py-1 rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 text-sm"
+          className="px-2 py-1 rounded border border-border bg-input text-foreground text-sm"
         >
           <option value="">{match.slot_a_label ?? 'TBD'}</option>
           {TEAMS.map(t => <option key={t.code} value={t.code}>{t.flag} {t.name}</option>)}
@@ -106,7 +106,7 @@ function AdminRow({ match }: { match: MatchRow }) {
           type="number"
           value={scoreA}
           onChange={(e) => setScoreA(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
-          className="w-14 px-2 py-1 rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 text-sm"
+          className="w-14 px-2 py-1 rounded border border-border bg-input text-foreground text-sm"
           placeholder="–"
         />
       </div>
@@ -114,7 +114,7 @@ function AdminRow({ match }: { match: MatchRow }) {
         <select
           value={teamB}
           onChange={(e) => setTeamB(e.target.value)}
-          className="px-2 py-1 rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 text-sm"
+          className="px-2 py-1 rounded border border-border bg-input text-foreground text-sm"
         >
           <option value="">{match.slot_b_label ?? 'TBD'}</option>
           {TEAMS.map(t => <option key={t.code} value={t.code}>{t.flag} {t.name}</option>)}
@@ -123,14 +123,14 @@ function AdminRow({ match }: { match: MatchRow }) {
           type="number"
           value={scoreB}
           onChange={(e) => setScoreB(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
-          className="w-14 px-2 py-1 rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 text-sm"
+          className="w-14 px-2 py-1 rounded border border-border bg-input text-foreground text-sm"
           placeholder="–"
         />
       </div>
       <select
         value={winner}
         onChange={(e) => setWinner(e.target.value)}
-        className="px-2 py-1 rounded border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 text-sm"
+        className="px-2 py-1 rounded border border-border bg-input text-foreground text-sm"
       >
         <option value="">
           {match.round === 'group' ? '(Draw)' : 'Pick winner'}
@@ -145,11 +145,11 @@ function AdminRow({ match }: { match: MatchRow }) {
       <button
         onClick={save}
         disabled={saving}
-        className="px-3 py-1.5 rounded bg-pitch-600 hover:bg-pitch-700 text-white text-sm font-medium disabled:opacity-50"
+        className="px-3 py-1.5 rounded bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 disabled:opacity-50"
       >
         {saving ? 'Saving…' : 'Save'}
       </button>
-      {error && <p className="col-span-full text-xs text-red-500">{error}</p>}
+      {error && <p className="col-span-full text-xs text-destructive">{error}</p>}
     </div>
   )
 }

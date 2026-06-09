@@ -62,7 +62,7 @@ export function BracketGrid({
       <div className="flex gap-4 min-w-max">
         {ROUND_ORDER.map(r => (
           <section key={r} className="flex flex-col gap-2 min-w-[200px]">
-            <h2 className="font-display font-bold text-sm text-neutral-700 dark:text-neutral-300 sticky top-0">
+            <h2 className="font-display font-bold text-sm text-foreground/80 sticky top-0 bg-background/80 backdrop-blur py-1">
               {ROUND_LABEL[r]}
             </h2>
             {byRound[r].map(m => {
@@ -84,8 +84,8 @@ export function BracketGrid({
         ))}
 
         {/* Third-place playoff lives off to the side */}
-        <section className="flex flex-col gap-2 min-w-[200px] border-l border-dashed border-neutral-300 dark:border-neutral-700 pl-4">
-          <h2 className="font-display font-bold text-sm text-neutral-700 dark:text-neutral-300 sticky top-0">
+        <section className="flex flex-col gap-2 min-w-[200px] border-l border-dashed border-border pl-4">
+          <h2 className="font-display font-bold text-sm text-foreground/80 sticky top-0 bg-background/80 backdrop-blur py-1">
             Third place
           </h2>
           {byRound.third.map(m => {

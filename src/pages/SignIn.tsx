@@ -14,23 +14,23 @@ export function SignInPage() {
     if (session) navigate('/groups', { replace: true })
   }, [session, navigate])
 
-  if (loading) return <div className="p-12 text-center text-neutral-500">Loading…</div>
+  if (loading) return <div className="p-12 text-center text-muted-foreground">Loading…</div>
   if (session) return <Navigate to="/groups" replace />
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-pitch-100 to-white dark:from-pitch-950 dark:to-neutral-950">
-      <div className="w-full max-w-md bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 shadow-xl">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/15 to-background">
+      <div className="w-full max-w-md bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-xl">
         <div className="text-center mb-6">
           <div className="text-5xl mb-2">⚽</div>
           <h1 className="font-display text-2xl font-bold">World Cup 2026</h1>
-          <p className="text-sm text-neutral-500 mt-1">Pick your bracket. Watch your friends miss theirs.</p>
+          <p className="text-sm text-muted-foreground mt-1">Pick your bracket. Watch your friends miss theirs.</p>
         </div>
 
         {sent ? (
           <div className="text-center space-y-3">
             <div className="text-2xl">📬</div>
             <p className="font-medium">Check your inbox</p>
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-muted-foreground">
               We sent a magic link to <span className="font-mono">{email}</span>.
               Click it to sign in.
             </p>
@@ -56,14 +56,14 @@ export function SignInPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="mt-1 w-full px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 focus:ring-2 focus:ring-pitch-500 focus:border-pitch-500 outline-none"
+                className="mt-1 w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none"
               />
             </label>
-            {error && <p className="text-sm text-red-500">{error}</p>}
+            {error && <p className="text-sm text-destructive">{error}</p>}
             <button
               type="submit"
               disabled={submitting || !email}
-              className="w-full py-2 rounded-lg bg-pitch-600 hover:bg-pitch-700 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? 'Sending…' : 'Send magic link'}
             </button>

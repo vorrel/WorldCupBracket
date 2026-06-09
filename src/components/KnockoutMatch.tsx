@@ -41,19 +41,19 @@ export function KnockoutMatch({
 
   const slotCls = (code: string | null, isWinner: boolean) => {
     if (!code) return 'opacity-50'
-    if (isWinner) return 'bg-pitch-100 ring-2 ring-pitch-500 dark:bg-pitch-900/60'
+    if (isWinner) return 'bg-primary/15 ring-2 ring-primary text-foreground'
     if (locked) return 'opacity-70'
     if (readonly) return ''
-    return 'hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer'
+    return 'hover:bg-accent hover:text-accent-foreground cursor-pointer'
   }
 
   return (
     <div className={`rounded-lg border p-2 min-w-[180px] ${
       locked
-        ? 'bg-neutral-50 border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800'
-        : 'bg-white border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800'
+        ? 'bg-muted border-border'
+        : 'bg-card border-border'
     }`}>
-      <div className="text-[10px] text-neutral-500 flex justify-between items-center mb-1">
+      <div className="text-[10px] text-muted-foreground flex justify-between items-center mb-1">
         <span>M{match.match_number}</span>
         <span className="truncate ml-2">{fmtKickoff(match.kickoff_at)}</span>
       </div>

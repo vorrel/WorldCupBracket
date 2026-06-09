@@ -9,7 +9,7 @@ export function BracketPage() {
   const { picks, setPicks, loading: pl } = usePicks(session?.user.id)
   const { save, status } = usePickSaver(session?.user.id)
 
-  if (ml || pl) return <div className="text-neutral-500">Loading…</div>
+  if (ml || pl) return <div className="text-muted-foreground">Loading…</div>
 
   function applyPick(matchNumber: number, winnerCode: string) {
     if (!session) return
@@ -42,7 +42,7 @@ export function BracketPage() {
       <div className="flex items-baseline justify-between mb-4">
         <div>
           <h1 className="font-display text-2xl font-bold">Knockout bracket</h1>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Slots fill in from your group picks. Click a team to advance them.
           </p>
         </div>
@@ -60,7 +60,7 @@ export function BracketPage() {
 
 function SaveBadge({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' }) {
   if (status === 'idle') return null
-  if (status === 'saving') return <span className="text-xs text-neutral-500">Saving…</span>
-  if (status === 'saved') return <span className="text-xs text-pitch-600">Saved ✓</span>
-  return <span className="text-xs text-red-500">Save failed</span>
+  if (status === 'saving') return <span className="text-xs text-muted-foreground">Saving…</span>
+  if (status === 'saved') return <span className="text-xs text-primary">Saved ✓</span>
+  return <span className="text-xs text-destructive">Save failed</span>
 }

@@ -12,7 +12,7 @@ import { useAuth } from './lib/auth'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { session, loading } = useAuth()
-  if (loading) return <div className="p-12 text-center text-neutral-500">Loading…</div>
+  if (loading) return <div className="p-12 text-center text-muted-foreground">Loading…</div>
   if (!session) return <Navigate to="/sign-in" replace />
   return <>{children}</>
 }

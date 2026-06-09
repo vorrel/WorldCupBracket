@@ -22,7 +22,7 @@ export function ProfilePage() {
   }, [session])
 
   if (!session) return null
-  if (loading) return <div className="text-neutral-500">Loading…</div>
+  if (loading) return <div className="text-muted-foreground">Loading…</div>
 
   return (
     <div className="max-w-md">
@@ -46,13 +46,13 @@ export function ProfilePage() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950"
+            className="mt-1 w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none"
             placeholder="What should we call you on the leaderboard?"
           />
         </label>
         <button
           type="submit"
-          className="px-4 py-2 rounded-lg bg-pitch-600 hover:bg-pitch-700 text-white font-medium"
+          className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90"
         >
           {saved ? 'Saved ✓' : 'Save'}
         </button>
