@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useAuth } from '../lib/auth'
 import { useMatches, usePicks, usePickSaver } from '../lib/hooks'
-import { GROUPS, teamsInGroup, type Group } from '../data/teams'
+import { GROUPS, teamsInGroup, TEAMS_BY_CODE, type Group } from '../data/teams'
 import { MatchPicker } from '../components/MatchPicker'
 import { TeamBadge } from '../components/TeamBadge'
 import { computeGroupStandings, type PickMap } from '../lib/bracket'
@@ -118,19 +118,28 @@ function GroupCard({
       </header>
 
       <ol className="text-xs space-y-0.5 mb-3">
-        {standings.map((t, i) => (
-          <li key={t.code} className="flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <span className={`w-4 text-right tabular-nums ${
-                i < 2 ? 'font-bold text-primary' : i === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'
-              }`}>{i + 1}.</span>
-              <TeamBadge code={t.code} size="sm" />
-            </span>
-            <span className="tabular-nums text-muted-foreground">
-              {t.pts}pt · {t.gd >= 0 ? '+' : ''}{t.gd}gd
-            </span>
-          </li>
-        ))}
+        {standings.map((t, i) => {
+          const team = TEAMS_BY_CODE[t.code]
+          return (
+            <li key={t.code} className="flex items-center justify-between gap-2 min-w-0">
+              <span className="flex items-center gap-2 min-w-0">
+                <span className={`w-4 text-right tabular-nums shrink-0 ${
+                  i < 2 ? 'font-bold text-primary' : i === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'
+                }`}>{i + 1}.</span>
+                <TeamBadge code={t.code} size="sm" />
+                <span
+                  className="shrink-0 px-1.5 py-0.5 rounded-sm bg-muted text-muted-foreground text-[10px] tabular-nums font-medium"
+                  title={`FIFA World Ranking #${team.rank}`}
+                >
+                  #{team.rank}
+                </span>
+              </span>
+              <span className="tabular-nums text-muted-foreground shrink-0">
+                {t.pts}pt · {t.gd >= 0 ? '+' : ''}{t.gd}gd
+              </span>
+            </li>
+          )
+        })}
       </ol>
 
       <div className="space-y-2">
