@@ -80,7 +80,7 @@ export function GroupsPage() {
         <SaveBadge status={status} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {GROUPS.map(g => (
           <GroupCard
             key={g}
